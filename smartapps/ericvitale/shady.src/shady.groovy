@@ -189,11 +189,3 @@ def log(data, type) {
 def appVersion() { return "1.0.0" }
 
 /************ End Logging Methods *********************************************************/
-
-/************ Begin Input Option Methods **************************************************/
-
-def getShadeRange() {
-	return "0..100"
-}
-
-/************ End Input Option Methods ****************************************************/
