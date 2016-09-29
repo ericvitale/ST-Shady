@@ -1,5 +1,7 @@
 # Shady
 
+![Shady](https://s3.amazonaws.com/ev-public/st-images/shady-3x.png)
+
 ## Summary
 Shady is a manager app that allows you to group your binds and manage them as a single device. This SmartApp requires the companion Device Hanlder "Shady Groups".
 
