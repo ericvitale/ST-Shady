@@ -47,7 +47,7 @@ def startPage() {
 }
 
 def parentPage() {
-	return dynamicPage(name: "parentPage", title: "", nextPage: "", install: false, uninstall: true) {
+	return dynamicPage(name: "parentPage", title: "", nextPage: "", install: true, uninstall: true) {
         section("Create a new child app.") {
             app(name: "childApps", appName: appName(), namespace: "ericvitale", title: "New Shade Automation", multiple: true)
         }
