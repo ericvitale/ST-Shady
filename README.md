@@ -22,8 +22,8 @@ Set Level
 9. Select "shady-group.groovy".
 10. Check "Publish" and hit "Execute".
 11. Click on the "My SmartApps" section in the navigation bar.
-12. Select "Update from Repo" and select "ST-Trigger-My-Lights".
-13. Select "trigger-my-lights.groovy".
+12. Select "Update from Repo" and select "ST-Shady".
+13. Select "shady.groovy".
 14. Check "Publish" and hit "Execute".
 
 ## Manual Installation (if that is your thing)
