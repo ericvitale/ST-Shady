@@ -3,6 +3,7 @@
  *
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.1 - Refresh now supported. Added align top and align bottom.
  *  Version 1.0.0 - Initial Release
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -136,6 +137,63 @@ def setLevel(val) {
 	log("Recieved setLevel(${val}) command.", "DEBUG")
 }
 
+def alignTop() {
+	def top = 0
+    
+    selectedShades.each { it->
+    	log("${it.label} is at ${it.currentValue('level')}%.", "INFO")
+        if(it.currentValue('level') > top) {
+        	top = it.currentValue('level')
+        }
+    }
+    
+    selectedShades.each { it->
+    	it.setLevel(top)
+    }
+    
+    return top
+}
+
+def alignBottom() {
+	def bottom = 100
+    
+    selectedShades.each { it->
+    	log("${it.label} is at ${it.currentValue('level')}%.", "INFO")
+        if(it.currentValue('level') < bottom) {
+        	bottom = it.currentValue('level')
+        }
+    }
+    
+    selectedShades.each { it->
+    	it.setLevel(bottom)
+    }
+    
+    return bottom
+}
+
+def stagger() {
+	def interval = 100 / selectedShades.size()
+    def level = 100 + interval
+    selectedShades.each { it->
+    	it.setLevel(level)
+        log("Setting ${it.label} to ${level}%.", "INFO")
+        level = level - interval
+    }
+}
+
+def checkShades() {
+	def theLevel = 0
+    
+	selectedShades.each { it->
+    	log("${it.label} is at ${it.currentValue('level')}%.", "INFO")
+        if(it.currentValue('level') > 0) {
+        	theLevel = it.currentValue('level')
+        }
+    }
+    
+    return theLevel
+}
+
 /************ Begin Logging Methods *******************************************************/
 
 def determineLogLevel(data) {
@@ -186,6 +244,6 @@ def log(data, type) {
     }
 }
 
-def appVersion() { return "1.0.0" }
+def appVersion() { return "1.0.1" }
 
 /************ End Logging Methods *********************************************************/
