@@ -1,7 +1,8 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
- *  Version 1.0.1 - Updated the custom button to show the custom level the user selected.
+ *  Version 1.0.1 - Updated the custom button to show the custom level the user selected. Refresh now supported.
+ *                    Added align top and align bottom.
  *  Version 1.0.0 - Initial Release
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -28,6 +29,8 @@ metadata {
         command "sceneThree"
         command "sceneFour"
         command "sceneFive"
+        command "alignTop"
+        command "alignBottom"
         
         attribute "sceneOne", "string"
 	}
@@ -95,9 +98,18 @@ metadata {
 		valueTile("level", "device.level", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "level", label:'${currentValue} %', unit:"%", backgroundColor:"#ffffff"
 		}
+        
+        standardTile("top", "device.top", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
+			state "default", label:'Align Top', action:"alignTop", icon:"st.Home.home15"
+		}
+        
+        standardTile("bottom", "device.bottom", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
+			state "default", label:'Align Bottom', action:"alignBottom", icon:"st.Home.home15"
+		}
+        
 
-		main(["switch"])
-		details(["switchDetails", "ShadeLevel", "levelSliderControl", "sceneOne", "sceneTwo", "sceneThree", "sceneFour", "sceneFive", "refresh"])
+		main(["switch", "level"])
+		details(["switchDetails", "ShadeLevel", "levelSliderControl", "sceneOne", "sceneTwo", "sceneThree", "sceneFour", "sceneFive", "refresh", "top", "bottom"])
 
 	}
 }
@@ -126,6 +138,26 @@ def sceneFour() {
 
 def sceneFive() {
     setLevel(80)
+}
+
+def alignTop() {
+	def level = parent.alignTop()
+    if (level > 0) {
+		sendEvent(name: "switch", value: "on")
+	} else {
+		sendEvent(name: "switch", value: "off")
+	}
+	sendEvent(name: "level", value: level, unit: "%")
+}
+
+def alignBottom() {
+	def level = parent.alignBottom()
+    if (level > 0) {
+		sendEvent(name: "switch", value: "on")
+	} else {
+		sendEvent(name: "switch", value: "off")
+	}
+	sendEvent(name: "level", value: level, unit: "%")
 }
 
 def parse(String description) {
@@ -170,6 +202,14 @@ def poll() {
 
 def refresh() {
 	log.debug "refresh() is called"
+    def level = parent.checkShades()
+    
+    if (level > 0) {
+		sendEvent(name: "switch", value: "on")
+	} else {
+		sendEvent(name: "switch", value: "off")
+	}
+	sendEvent(name: "level", value: level, unit: "%")
 }
 
 def invertSwitch(invert=true) {
@@ -226,6 +266,6 @@ def log(data, type) {
     }
 }
 
-def dhVersion() { return "1.0.0" }
+def dhVersion() { return "1.0.1" }
 
 /************ End Logging Methods *********************************************************/
