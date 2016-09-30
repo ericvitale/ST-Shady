@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.1 - Updated the custom button to show the custom level the user selected.
  *  Version 1.0.0 - Initial Release
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -27,6 +28,8 @@ metadata {
         command "sceneThree"
         command "sceneFour"
         command "sceneFive"
+        
+        attribute "sceneOne", "string"
 	}
     
     preferences {
@@ -66,7 +69,7 @@ metadata {
         }
         
         standardTile("sceneOne", "device.sceneOne", inactiveLabel: false, decoration: "flat", height: 2, width: 2) {
-			state "default", label:"Custom", action:"sceneOne", icon: "st.Weather.weather14"
+			state "default", label:'${currentValue}%', action:"sceneOne", icon: "st.Weather.weather14"
 		}
         
         standardTile("sceneTwo", "device.sceneTwo", inactiveLabel: false, decoration: "flat", height: 2, width: 2) {
@@ -97,6 +100,12 @@ metadata {
 		details(["switchDetails", "ShadeLevel", "levelSliderControl", "sceneOne", "sceneTwo", "sceneThree", "sceneFour", "sceneFive", "refresh"])
 
 	}
+}
+
+def updated() {
+	sendEvent(name: "sceneOne", value: customLevel, display: false , displayed: false)
+    log("Custom Level Selected: ${customLevel}.", "INFO")
+    log("Debug Level Selected: ${logging}.", "INFO")
 }
 
 def sceneOne() {
