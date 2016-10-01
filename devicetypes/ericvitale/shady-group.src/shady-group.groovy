@@ -14,6 +14,9 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ *  You can find this device handler @ https://github.com/ericvitale/ST-Shady
+ *  You can find my other device handlers & SmartApps @ https://github.com/ericvitale
+ *
  */
 metadata {
 	definition (name: "Shady Group", namespace: "ericvitale", author: "ericvitale@gmail.com") {
@@ -31,6 +34,7 @@ metadata {
         command "sceneFive"
         command "alignTop"
         command "alignBottom"
+        command "stagger"
         
         attribute "sceneOne", "string"
 	}
@@ -44,10 +48,10 @@ metadata {
     
     	multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true){
 			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
-				attributeState "on", label:'${name}', action:"switch.off", icon:"st.Home.home9.on", backgroundColor:"#79b821", nextState:"turningOff"
-				attributeState "off", label:'${name}', action:"switch.on", icon:"st.Home.home9.off", backgroundColor:"#ffffff", nextState:"turningOn"
-				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.Home.home9.on", backgroundColor:"#79b821", nextState:"turningOff"
-				attributeState "turningOff", label:'${name}', action:"switch.on", icon:"st.Home.home9.off", backgroundColor:"#ffffff", nextState:"turningOn"
+				attributeState "on", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#79b821", nextState:"turningOff"
+				attributeState "off", label:'${name}', action:"switch.on", icon:"st.Home.home9", backgroundColor:"#ffffff", nextState:"turningOn"
+				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#79b821", nextState:"turningOff"
+				attributeState "turningOff", label:'${name}', action:"switch.on", icon:"st.Home.home9", backgroundColor:"#ffffff", nextState:"turningOn"
 			}
 			
             tileAttribute ("device.level", key: "SLIDER_CONTROL") {
@@ -210,6 +214,12 @@ def refresh() {
 		sendEvent(name: "switch", value: "off")
 	}
 	sendEvent(name: "level", value: level, unit: "%")
+}
+
+def stagger() {
+	parent.stagger()
+    sendEvent(name: "switch", value: "on")
+    sendEvent(name: "level", value: level, unit: "%")
 }
 
 def invertSwitch(invert=true) {
