@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.2 - Supported proper polling.
  *  Version 1.0.1 - Updated the custom button to show the custom level the user selected. Refresh now supported.
  *                    Added align top and align bottom.
  *  Version 1.0.0 - Initial Release
@@ -202,10 +203,17 @@ def setLevel(value, duration) {
 }
 
 def poll() {
+	log("polling...", "DEBUG")
+    getChildShadeLevels()
 }
 
 def refresh() {
-	log.debug "refresh() is called"
+	log("refreshing...", "DEBUG")
+    getChildShadeLevels()
+}
+
+def getChildShadeLevels() {
+	
     def level = parent.checkShades()
     
     if (level > 0) {
@@ -220,10 +228,6 @@ def stagger() {
 	parent.stagger()
     sendEvent(name: "switch", value: "on")
     sendEvent(name: "level", value: level, unit: "%")
-}
-
-def invertSwitch(invert=true) {
-
 }
 
 /************ Begin Logging Methods *******************************************************/
@@ -276,6 +280,6 @@ def log(data, type) {
     }
 }
 
-def dhVersion() { return "1.0.1" }
+def dhVersion() { return "1.0.2" }
 
 /************ End Logging Methods *********************************************************/
