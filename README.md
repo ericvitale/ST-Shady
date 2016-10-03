@@ -5,10 +5,12 @@
 ## Summary
 Shady is a manager app that allows you to group your binds and manage them as a single device. This SmartApp requires the companion Device Hanlder "Shady Groups".
 
+Also, take a look at my [Z-Wave Shade Device Handler](https://github.com/ericvitale/ST-Z-Wave-Shade).
+
 ## This device handler supports
 1. On (Up) / Off (Down)
 2. Set Level
-3. 6 scenes
+3. 6 quick levels, with one of them being a custom value via settings.
 
 ## Installation via GitHub Integration
 1. Open SmartThings IDE in your web browser and log into your account.
