@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.3 - Support for auto refresh added when a shade or set of shades moves.
  *  Version 1.0.2 - Supported proper polling.
  *  Version 1.0.1 - Updated the custom button to show the custom level the user selected. Refresh now supported.
  *                    Added align top and align bottom.
@@ -280,6 +281,6 @@ def log(data, type) {
     }
 }
 
-def dhVersion() { return "1.0.2" }
+def dhVersion() { return "1.0.3" }
 
 /************ End Logging Methods *********************************************************/
