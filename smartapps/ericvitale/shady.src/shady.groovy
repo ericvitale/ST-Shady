@@ -3,6 +3,7 @@
  *
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.2 - Support for auto refresh added when a shade or set of shades moves.
  *  Version 1.0.1 - Refresh now supported. Added align top and align bottom.
  *  Version 1.0.0 - Initial Release
  *
@@ -16,7 +17,7 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *
- *  You can find this smart app @ https://github.com/ericvitale/ST-Shadr
+ *  You can find this smart app @ https://github.com/ericvitale/ST-Shady
  *  You can find my other device handlers & SmartApps @ https://github.com/ericvitale
  *
  */
@@ -119,7 +120,15 @@ def initChild(installing) {
     	addChildDevice("ericvitale", "Shady Group", UUID.randomUUID().toString(), myHubId, ["name": groupName, "label": groupName, completedSetup: true])
     }
     
+    subscribe(selectedShades, "switch", switchHandler)
+    subscribe(selectedShades, "level", switchHandler)
+    
     log("End child initialization().", "DEBUG")
+}
+
+def switchHandler(evt) {
+	log("Shades are moving.", "INFO")
+    scheduleRefresh()
 }
 
 def up() {
@@ -194,6 +203,18 @@ def checkShades() {
     return theLevel
 }
 
+def scheduleRefresh() {
+	runIn(30, asyncRefresh)
+}
+
+def asyncRefresh() {
+	log("Running Asynchronous Refresh.", "INFO")
+    checkShades()
+    getChildDevices().each { it->
+    	it.refresh()
+    }
+}
+
 /************ Begin Logging Methods *******************************************************/
 
 def determineLogLevel(data) {
@@ -244,6 +265,6 @@ def log(data, type) {
     }
 }
 
-def appVersion() { return "1.0.1" }
+def appVersion() { return "1.0.2" }
 
 /************ End Logging Methods *********************************************************/
