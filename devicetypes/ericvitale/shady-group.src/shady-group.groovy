@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.4 - Support for the Window Shade capability.
  *  Version 1.0.3 - Support for auto refresh added when a shade or set of shades moves.
  *  Version 1.0.2 - Supported proper polling.
  *  Version 1.0.1 - Updated the custom button to show the custom level the user selected. Refresh now supported.
@@ -28,6 +29,7 @@ metadata {
 		capability "Polling"
 		capability "Refresh"
 		capability "Sensor"
+        capability "Window Shade"
         
         command "sceneOne"
         command "sceneTwo"
@@ -191,16 +193,33 @@ def setLevel(value) {
     log("Sending command to parent: setLevel(${level}).", "DEBUG")
     parent.setLevel(level)
     
-	if (level > 0) {
+	if (level > 0 && leve <= 99) {
 		sendEvent(name: "switch", value: "on")
-	} else {
+        sendEvent(name: "windowShade", value: "partially open")
+	} else if(level == 0) {
 		sendEvent(name: "switch", value: "off")
-	}
+        sendEvent(name: "windowShade", value: "closed")
+	} else {
+    	sendEvent(name: "windowShade", value: "open")
+    }
+    
 	sendEvent(name: "level", value: level, unit: "%")
 }
 
 def setLevel(value, duration) {
 	setLevel(value)
+}
+
+def open() {
+	setLevel(100)
+}
+
+def close() {
+	setLevel(0)
+}
+
+def presetPosition() {
+	setLevel(customLevel)
 }
 
 def poll() {
@@ -217,11 +236,15 @@ def getChildShadeLevels() {
 	
     def level = parent.checkShades()
     
-    if (level > 0) {
+    if (level > 0 && leve <= 99) {
 		sendEvent(name: "switch", value: "on")
-	} else {
+        sendEvent(name: "windowShade", value: "partially open")
+	} else if(level == 0) {
 		sendEvent(name: "switch", value: "off")
-	}
+        sendEvent(name: "windowShade", value: "closed")
+	} else {
+    	sendEvent(name: "windowShade", value: "open")
+    }
 	sendEvent(name: "level", value: level, unit: "%")
 }
 
