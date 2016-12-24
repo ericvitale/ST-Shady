@@ -132,12 +132,12 @@ def switchHandler(evt) {
 }
 
 def up() {
-	selectedShades.off()
+	selectedShades.on()
 	log("Recieved up command.", "DEBUG")
 }
 
 def down() {
-	selectedShades.on()
+	selectedShades.off()
 	log("Recieved down command.", "DEBUG")
 }
 
