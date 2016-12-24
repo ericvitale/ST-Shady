@@ -40,6 +40,7 @@ metadata {
         command "alignTop"
         command "alignBottom"
         command "stagger"
+        command "levelOpenClose"
         
         attribute "sceneOne", "string"
 	}
