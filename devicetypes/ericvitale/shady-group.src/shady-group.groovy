@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.5 - Support added for levelOpenClose.
  *  Version 1.0.4 - Support for the Window Shade capability.
  *  Version 1.0.3 - Support for auto refresh added when a shade or set of shades moves.
  *  Version 1.0.2 - Supported proper polling.
@@ -208,6 +209,15 @@ def setLevel(value) {
 
 def setLevel(value, duration) {
 	setLevel(value)
+}
+
+def levelOpenClose(value) {
+    log("levelOpenClose called with value ${value}.", "DEBUG")
+    if (value) {
+        on()
+    } else {
+        off()
+    }
 }
 
 def open() {
