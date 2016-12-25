@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.6 - Added support for the setLevel() command with no parameters for Apple Homekit.
  *  Version 1.0.5 - Support added for levelOpenClose.
  *  Version 1.0.4 - Support for the Window Shade capability.
  *  Version 1.0.3 - Support for auto refresh added when a shade or set of shades moves.
@@ -186,6 +187,10 @@ def off() {
 	parent.down()
     sendEvent(name: "switch", value: "off")
     sendEvent(name: "onPercentage", value: 0, displayed: false)
+}
+
+def setLevel() {
+	setLevel(0)
 }
 
 def setLevel(value) {
