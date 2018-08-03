@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.7 - Updated "on" indicator color to match ST blue (#00a0dc). 08/03/2018
  *  Version 1.0.6 - Added support for the setLevel() command with no parameters for Apple Homekit.
  *  Version 1.0.5 - Support added for levelOpenClose.
  *  Version 1.0.4 - Support for the Window Shade capability.
@@ -55,9 +56,9 @@ metadata {
     
     	multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true){
 			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
-				attributeState "on", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#79b821", nextState:"turningOff"
+				attributeState "on", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#00a0dc", nextState:"turningOff"
 				attributeState "off", label:'${name}', action:"switch.on", icon:"st.Home.home9", backgroundColor:"#ffffff", nextState:"turningOn"
-				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#79b821", nextState:"turningOff"
+				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#00a0dc", nextState:"turningOff"
 				attributeState "turningOff", label:'${name}', action:"switch.on", icon:"st.Home.home9", backgroundColor:"#ffffff", nextState:"turningOn"
 			}
 			
@@ -67,9 +68,9 @@ metadata {
 		}
 		multiAttributeTile(name:"switchDetails", type: "lighting", width: 6, height: 4, canChangeIcon: true){
 			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
-				attributeState "on", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#79b821", nextState:"turningOff"
+				attributeState "on", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#00a0dc", nextState:"turningOff"
 				attributeState "off", label:'${name}', action:"switch.on", icon:"st.Home.home9", backgroundColor:"#ffffff", nextState:"turningOn"
-				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#79b821", nextState:"turningOff"
+				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.Home.home9", backgroundColor:"#00a0dc", nextState:"turningOff"
 				attributeState "turningOff", label:'${name}', action:"switch.on", icon:"st.Home.home9", backgroundColor:"#ffffff", nextState:"turningOn"
 			}
 		}
@@ -200,7 +201,7 @@ def setLevel(value) {
     log("Sending command to parent: setLevel(${level}).", "DEBUG")
     parent.setLevel(level)
     
-	if (level > 0 && level <= 99) {
+	if (level > 0 && leve <= 99) {
 		sendEvent(name: "switch", value: "on")
         sendEvent(name: "windowShade", value: "partially open")
 	} else if(level == 0) {
@@ -252,7 +253,7 @@ def getChildShadeLevels() {
 	
     def level = parent.checkShades()
     
-    if (level > 0 && leve <= 99) {
+    if (level > 0 && level <= 99) {
 		sendEvent(name: "switch", value: "on")
         sendEvent(name: "windowShade", value: "partially open")
 	} else if(level == 0) {
