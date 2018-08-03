@@ -201,7 +201,7 @@ def setLevel(value) {
     log("Sending command to parent: setLevel(${level}).", "DEBUG")
     parent.setLevel(level)
     
-	if (level > 0 && leve <= 99) {
+	if (level > 0 && level <= 99) {
 		sendEvent(name: "switch", value: "on")
         sendEvent(name: "windowShade", value: "partially open")
 	} else if(level == 0) {
