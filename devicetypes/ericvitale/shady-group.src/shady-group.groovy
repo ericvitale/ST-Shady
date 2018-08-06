@@ -85,7 +85,7 @@ metadata {
         }
         
         standardTile("sceneOne", "device.sceneOne", inactiveLabel: false, decoration: "flat", height: 2, width: 2) {
-			state "default", label:'${currentValue}%', action:"sceneOne", icon: "st.Weather.weather14"
+			state "default", label:"Custom", action:"sceneOne", icon: "st.Weather.weather14"
 		}
         
         standardTile("sceneTwo", "device.sceneTwo", inactiveLabel: false, decoration: "flat", height: 2, width: 2) {
