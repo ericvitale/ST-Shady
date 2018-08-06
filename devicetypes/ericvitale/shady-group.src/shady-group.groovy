@@ -1,6 +1,7 @@
 /**
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.8 - Allow Shady app to call the specific custom setting for each shade. 08/06/2018
  *  Version 1.0.7 - Updated "on" indicator color to match ST blue (#00a0dc). 08/03/2018
  *  Version 1.0.6 - Added support for the setLevel() command with no parameters for Apple Homekit.
  *  Version 1.0.5 - Support added for levelOpenClose.
@@ -133,7 +134,9 @@ def updated() {
 }
 
 def sceneOne() {
-    setLevel(customLevel)
+    //setLevel(customLevel)
+    parent.SceneOne()
+    sendEvent(name: "switch", value: "on")
 }
 
 def sceneTwo() {
