@@ -3,6 +3,7 @@
  *
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.8 - Allow Shady app to call the specific custom setting for each shade. 08/06/2018
  *  Version 1.0.2 - Support for auto refresh added when a shade or set of shades moves.
  *  Version 1.0.1 - Refresh now supported. Added align top and align bottom.
  *  Version 1.0.0 - Initial Release
@@ -144,6 +145,11 @@ def down() {
 def setLevel(val) {
 	selectedShades.setLevel(val)
 	log("Recieved setLevel(${val}) command.", "DEBUG")
+}
+
+def sceneOne() {
+	log("Setting shades to their custom levels.", "INFO")
+    selectedShades.sceneOne()
 }
 
 def alignTop() {
