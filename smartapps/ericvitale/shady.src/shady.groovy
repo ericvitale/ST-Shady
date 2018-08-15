@@ -109,7 +109,11 @@ def initChild(installing) {
     	log("Shades selected...", "INFO")
         selectedShades.each { it->
         	log("Shade: ${it}.", "INFO")
-            myHubId = it.hub.id
+		if(it.hub == null) {
+			myHubId = null
+		} else {
+            		myHubId = it.hub.id
+		}
         }
         log("Shade list complete.", "INFO")
     } else {
