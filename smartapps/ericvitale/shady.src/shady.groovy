@@ -3,6 +3,7 @@
  *
  *  Copyright 2016 ericvitale@gmail.com
  *
+ *  Version 1.0.3 - Fix for remote devices that do not have a hub id.
  *  Version 1.0.2 - Support for auto refresh added when a shade or set of shades moves.
  *  Version 1.0.1 - Refresh now supported. Added align top and align bottom.
  *  Version 1.0.0 - Initial Release
@@ -21,6 +22,8 @@
  *  You can find my other device handlers & SmartApps @ https://github.com/ericvitale
  *
  */
+
+public static String version() { return "v1.0.3a.20180815" }
  
 definition(
     name: "${appName()}",
@@ -221,7 +224,11 @@ def asyncRefresh() {
 
 /************ Begin Logging Methods *******************************************************/
 
-def determineLogLevel(data) {
+private getLogPrefix() {
+	return "Shady.${version()}>>>"
+}
+
+private determineLogLevel(data) {
     switch (data?.toUpperCase()) {
         case "TRACE":
             return 0
@@ -244,7 +251,7 @@ def determineLogLevel(data) {
 }
 
 def log(data, type) {
-    data = "Shady -- v${appVersion()} --  ${data ?: ''}"
+    data = "${getLogPrefix()} ${data ?: ''}"
         
     if (determineLogLevel(type) >= determineLogLevel(settings?.logging ?: "INFO")) {
         switch (type?.toUpperCase()) {
@@ -264,11 +271,9 @@ def log(data, type) {
                 log.error "${data}"
                 break
             default:
-                log.error "Shady -- Invalid Log Setting"
+                log.error "${getLogPrefix()} Invalid Log Setting"
         }
     }
 }
-
-def appVersion() { return "1.0.2" }
 
 /************ End Logging Methods *********************************************************/
